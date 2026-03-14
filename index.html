@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agneloze Williams | Terminal_v2.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0c10;
+            --panel: #11141b;
+            --text: #e2e8f0;
+            --accent: #00f2ff; /* Electric Cyan */
+            --accent-dim: rgba(0, 242, 255, 0.2);
+            --border: #1e293b;
+            --glow: 0 0 15px rgba(0, 242, 255, 0.3);
+        }
+
+        @keyframes scan {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            5% { opacity: 0.9; }
+            10% { opacity: 0.7; }
+            15% { opacity: 1; }
+            80% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes boot {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            padding: 3rem 1.5rem;
+            max-width: 850px;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        /* Scanline Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 242, 255, 0.1);
+            z-index: 100;
+            animation: scan 4s linear infinite;
+            pointer-events: none;
+        }
+
+        header {
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--accent);
+            animation: boot 1.5s steps(20, end), flicker 3s infinite;
+        }
+
+        .headline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text);
+            opacity: 0.6;
+            letter-spacing: 2px;
+        }
+
+        .links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--accent-dim);
+            transition: all 0.3s ease;
+            background: rgba(0, 242, 255, 0.02);
+        }
+
+        .links a:hover {
+            background: var(--accent);
+            color: var(--bg);
+            box-shadow: var(--glow);
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            margin: 4rem 0 2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2::before {
+            content: "[0" attr(data-num) "]";
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+
+        h2::after {
+            content: "";
+            height: 1px;
+            flex-grow: 1;
+            background: var(--border);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 2px; height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-dim);
+            transform: scale(1.02);
+            box-shadow: var(--glow);
+        }
+
+        .card:hover::before {
+            height: 100%;
+        }
+
+        .card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--accent);
+            border: 1px solid var(--accent-dim);
+            padding: 2px 8px;
+            text-transform: uppercase;
+        }
+
+        .skill-group {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px dashed var(--border);
+        }
+
+        .skill-group strong {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-item {
+            font-size: 0.9rem;
+            color: var(--text);
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .skill-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 6rem;
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #475569;
+            letter-spacing: 2px;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .pfp-box {
+            width: 100px;
+            height: 100px;
+            border: 2px solid var(--accent);
+            padding: 5px;
+            position: relative;
+        }
+
+        .pfp-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.2);
+        }
+
+        .pfp-box::after {
+            content: "IMG_ID: 026";
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            .profile-container { flex-direction: column; text-align: center; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="profile-container">
+            <div class="pfp-box">
+                <img src="profile.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=AW&background=00f2ff&color=0a0c10&size=100'">
+            </div>
+            <div class="header-content">
+                <h1>Agneloze Williams</h1>
+                <div class="headline">DESIGNER // LOGICAL_PROGRAMMER // v2.0.4</div>
+                <div class="links">
+                    <a href="https://github.com/agneloze" target="_blank">GITHUB</a>
+                    <a href="https://www.linkedin.com/in/agneloze" target="_blank">LINKEDIN</a>
+                    <a href="mailto:agnelozesw@gmail.com">EMAIL</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="biometrics">
+        <div class="achievement-badge">
+            <span class="pulse"></span> [ACHIEVEMENT_UNLOCKED]: 1ST_PRIZE // GDG_HACKFEST_26
+        </div>
+        <h2 data-num="1">BIOMETRICS_AND_ABOUT</h2>
+        <div class="about-content">
+            <p>
+                Computer Engineering student at the intersection of <span class="highlight">Machine Logic</span> and <span class="highlight">Visual Design</span>. 
+                My workflow integrates advanced AI automation with core engineering principles to deliver high-impact digital solutions..
+            </p>
+            <p>
+                Winner of <span class="highlight">Google Developer Groups Hackfest '26</span> for developing a comprehensive ERP system. 
+            </p>
+        </div>
+    </section>
+
+    <style>
+        .achievement-badge {
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--accent);
+            padding: 0.75rem 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+            box-shadow: var(--glow);
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse-kf 1.5s infinite;
+        }
+
+        @keyframes pulse-kf {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 242, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 242, 255, 0); }
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            max-width: 100%;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            letter-spacing: 0.01em;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 700;
+            text-shadow: var(--glow);
+        }
+
+        .pfp-box img {
+            filter: grayscale(1);
+            transition: filter 0.3s ease;
+        }
+        
+        .pfp-box:hover img {
+            filter: grayscale(0);
+        }
+    </style>
+
+
+    <section>
+        <h2 data-num="2">DEPLOYED_REPOSITORIES</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>ERP_SYSTEM.exe</h3>
+                <p>College management infrastructure. Awarded 1st Prize at GDG Hackfest '26 for features and scalability.</p>
+                <div class="tag">WINNER // GDG_HACKFEST</div>
+            </div>
+            <div class="card">
+                <h3>IPL_DATA_SCRAPER.py</h3>
+                <p>Automated retrieval system for cricketer metrics. Built for high-speed data processing.</p>
+                <div class="tag">DATA_SCIENCE // PYTHON</div>
+            </div>
+            <div class="card">
+                <h3>SONAR_SIMULATION.sys</h3>
+                <p>Physics-based simulation engine built in Pygame. Focused on real-time signal logic.</p>
+                <div class="tag">SIMULATION // PYGAME</div>
+            </div>
+            <div class="card">
+                <h3>TECHFEST_DESIGN.ui</h3>
+                <p>Visual architecture and identity system for college-wide technical summit.</p>
+                <div class="tag">UI_UX // BRANDING</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 data-num="3">CORE_COMPETENCIES</h2>
+        <div class="skill-group">
+            <strong>HARDWARE_LOGIC / LANGUAGES</strong>
+            <div class="skill-tags">
+                <span class="skill-item">Python (Tkinter, Pandas, Pygame)</span>
+                <span class="skill-item">C</span>
+                <span class="skill-item">HTML5 / CSS3 / JavaScript</span>
+            </div>
+        </div>
+        <div class="skill-group">
+            <strong>VISUAL_ENGINES</strong>
+            <div class="skill-tags">
+                <span class="skill-item">Figma</span>
+                <span class="skill-item">Canva</span>
+                <span class="skill-item">Framer</span>
+            </div>
+        </div>
+        <div class="skill-group">
+            <strong>AI_AUTOMATION</strong>
+            <div class="skill-tags">
+                <span class="skill-item">Claude / Gemini / Lovable</span>
+                <span class="skill-item">Git / Architecture</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        [STATUS: SYSTEM_OPTIMIZED] // © 2026 AGNELOZE WILLIAMS
+    </footer>
+
+</body>
+</html>
