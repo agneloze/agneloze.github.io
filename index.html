@@ -375,12 +375,17 @@
 
 
     <section>
-        <h2 data-num="2">DEPLOYED_REPOSITORIES</h2>
+        <h2 data-num="2">EXECUTED_PROTOCOLS</h2>
         <div class="grid">
-            <div class="card">
+            <div class="card highlight-card">
                 <h3>ERP_SYSTEM.exe</h3>
                 <p>College management infrastructure. Awarded 1st Prize at GDG Hackfest '26 for features and scalability.</p>
                 <div class="tag">WINNER // GDG_HACKFEST</div>
+            </div>
+            <div class="card highlight-card">
+                <h3>OCEAN_HAZARD_REPORTING.sys</h3>
+                <p>Crowdsourced real-time hazard detection system (High Tides, Cyclones, Storms) for coastal communities.</p>
+                <div class="tag">SIH_2025 // CROWDSOURCING</div>
             </div>
             <div class="card">
                 <h3>IPL_DATA_SCRAPER.py</h3>
@@ -426,6 +431,47 @@
             </div>
         </div>
     </section>
+
+    <section>
+        <h2 data-num="4">ONGOING_PROCESSES</h2>
+        <ul class="ongoing-list">
+            <li><span class="file-name">poker_bot.ai</span> <span class="desc">// Decision logic for strategy simulation</span></li>
+            <li><span class="file-name">can_it_run_doom.ext</span> <span class="desc">// Hardware compatibility exploration</span></li>
+            <li><span class="file-name">love.exe</span> <span class="desc">// Dynamic audio-visual interactive experience</span></li>
+            <li><span class="file-name">ctf_archives</span> <span class="desc">// Security research logs</span></li>
+        </ul>
+    </section>
+
+    <style>
+        .highlight-card {
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.15);
+        }
+
+        .ongoing-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 1rem;
+            border-left: 1px solid var(--border);
+            padding-left: 1.5rem;
+        }
+
+        .ongoing-list li {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .ongoing-list .file-name {
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        .ongoing-list .desc {
+            opacity: 0.6;
+        }
+    </style>
 
     <footer>
         [STATUS: SYSTEM_OPTIMIZED] // © 2026 AGNELOZE WILLIAMS
